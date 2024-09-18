@@ -1,24 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstlast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vlomakin <vlomakin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/17 17:27:00 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/09/18 18:04:29 by sabdulki         ###   ########.fr       */
+/*   Created: 2023/07/25 10:53:16 by vlomakin          #+#    #+#             */
+/*   Updated: 2023/07/27 12:56:02 by vlomakin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub.h"
+#include "libft.h"
 
-int main(int ac, char **av)
+t_list	*ft_lstlast(t_list *lst)
 {
-	// if (ac != 2 || !av[1])
-	// if (ac != 3 || !av[1]) //DEBUG
-	(void)ac;
-	if (!av[1])
-		return (perror("invalid aruments"), 1);
-	parsing(av[1]);
-	return (0);
+	if (!lst)
+		return (NULL);
+	while (lst->next)
+	{
+		lst = lst->next;
+	}
+	return (lst);
 }

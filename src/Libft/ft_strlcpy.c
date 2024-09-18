@@ -1,24 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/17 17:27:00 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/09/18 18:04:29 by sabdulki         ###   ########.fr       */
+/*   Created: 2023/07/04 14:36:20 by vlomakin          #+#    #+#             */
+/*   Updated: 2024/07/10 13:40:20 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub.h"
+#include "libft.h"
 
-int main(int ac, char **av)
+size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 {
-	// if (ac != 2 || !av[1])
-	// if (ac != 3 || !av[1]) //DEBUG
-	(void)ac;
-	if (!av[1])
-		return (perror("invalid aruments"), 1);
-	parsing(av[1]);
-	return (0);
+	size_t	i;
+
+	i = 0;
+	if (!src)
+		return (0);
+	if (dstsize == 0)
+		return (ft_strlen(src));
+	while (src[i] && i < dstsize - 1)
+	{
+		dst[i] = src[i];
+		i++;
+	}
+	dst[i] = '\0';
+	return (ft_strlen(src));
 }

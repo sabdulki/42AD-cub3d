@@ -1,0 +1,20 @@
+/*
+	PARSING
+	1) check if the file exists and the format is name.cub (open());
+	2) read the file with gnl
+	So I should have 6 sprites at all.
+		TEXTURES (2.1)
+			2.1.1) check if lines contain NO, SO, EA, WE (the order doesn't matter)
+			2.1.2) check the access for path to texture for wall
+		COLORS (2.2)
+			2.2.1) check if 2 lines contain F(floor) and C(ceiling) (the order doesn't matter)
+			2.2.2) check if the colors are valid:
+				number > 0 && < 256
+				separated by comma
+				only 3 numbers after F or C
+		MAP (2.3)
+		2.3.1)
+		
+		
+	
+*/

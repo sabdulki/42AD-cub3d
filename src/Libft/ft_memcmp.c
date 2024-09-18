@@ -1,24 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vlomakin <vlomakin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/17 17:27:00 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/09/18 18:04:29 by sabdulki         ###   ########.fr       */
+/*   Created: 2023/07/05 16:17:35 by vlomakin          #+#    #+#             */
+/*   Updated: 2023/07/27 12:58:16 by vlomakin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub.h"
+#include "libft.h"
 
-int main(int ac, char **av)
+int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {
-	// if (ac != 2 || !av[1])
-	// if (ac != 3 || !av[1]) //DEBUG
-	(void)ac;
-	if (!av[1])
-		return (perror("invalid aruments"), 1);
-	parsing(av[1]);
+	unsigned char	*p;
+	unsigned char	*q;
+
+	p = (unsigned char *)s1;
+	q = (unsigned char *)s2;
+	while (n--)
+	{
+		if (*p != *q)
+			return (*p - *q);
+		p++;
+		q++;
+	}
 	return (0);
 }

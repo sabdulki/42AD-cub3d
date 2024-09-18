@@ -1,24 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vlomakin <vlomakin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/17 17:27:00 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/09/18 18:04:29 by sabdulki         ###   ########.fr       */
+/*   Created: 2023/07/03 14:29:17 by vlomakin          #+#    #+#             */
+/*   Updated: 2023/07/27 13:00:27 by vlomakin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub.h"
+#include "libft.h"
 
-int main(int ac, char **av)
+size_t	ft_strlen(const char *s)
 {
-	// if (ac != 2 || !av[1])
-	// if (ac != 3 || !av[1]) //DEBUG
-	(void)ac;
-	if (!av[1])
-		return (perror("invalid aruments"), 1);
-	parsing(av[1]);
-	return (0);
+	unsigned int	i;
+
+	i = 0;
+	while (s[i])
+		i++;
+	return (i);
 }

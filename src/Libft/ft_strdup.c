@@ -1,24 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/17 17:27:00 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/09/18 18:04:29 by sabdulki         ###   ########.fr       */
+/*   Created: 2023/07/07 17:30:54 by vlomakin          #+#    #+#             */
+/*   Updated: 2024/06/21 22:06:52 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub.h"
+#include "libft.h"
 
-int main(int ac, char **av)
+char	*ft_strdup(const char *s1)
 {
-	// if (ac != 2 || !av[1])
-	// if (ac != 3 || !av[1]) //DEBUG
-	(void)ac;
-	if (!av[1])
-		return (perror("invalid aruments"), 1);
-	parsing(av[1]);
-	return (0);
+	size_t	len;
+	char	*new_str;
+
+	if (!s1)
+		return (NULL);
+	len = ft_strlen(s1);
+	new_str = (char *)malloc(sizeof(char) * (len + 1));
+	if (!new_str)
+		return (NULL);
+	ft_memcpy(new_str, s1, len);
+	*(new_str + len) = '\0';
+	return (new_str);
 }
