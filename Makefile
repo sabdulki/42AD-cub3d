@@ -6,7 +6,7 @@
 #    By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/17 17:27:03 by sabdulki          #+#    #+#              #
-#    Updated: 2024/09/18 17:42:34 by sabdulki         ###   ########.fr        #
+#    Updated: 2024/09/19 16:29:45 by sabdulki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ SRC_P = 	./src/parsing/parsing.c \
 			./src/parsing/file_content.c \
 			./src/parsing/check_file.c 
 			
-SRCS_S =	./src/main.c
+SRCS_S =	./main.c
 
 SRCS = $(SRCS_S) $(SRC_GNL) $(SRC_P)
 OBJS = $(SRCS:.c=.o)
@@ -29,7 +29,7 @@ OBJS = $(SRCS:.c=.o)
 # OBJS := $(addprefix $(OBJS_DIR)/, $(notdir $(OBJS)))
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address --debug 
+CFLAGS = -Wall -Wextra -Werror -g3 --debug 
 
 LIBFT_CREATE = cd ./src/Libft && make  # Add this line to indicate the library path and name
 LIBFT_A = src/Libft/libft.a
