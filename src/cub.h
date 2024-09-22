@@ -6,7 +6,7 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:26:55 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/09/18 17:55:20 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/09/20 16:24:29 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ typedef struct s_sprite_list
 	int sprite_name;
 	char *texture_path;
 	int *color; //size = 3;
+	int head;
+	t_sprite_list	*next;
 	
 }		t_sprite_list;
 

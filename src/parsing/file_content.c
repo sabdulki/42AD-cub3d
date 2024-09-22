@@ -6,7 +6,7 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 13:48:22 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/09/19 19:02:33 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/09/20 16:27:05 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,7 @@ int str_content(char *str)
 	if (name == -1)
 		return (perror("invalid texture name"), 1);
 	printf("name: %d\n", name);
+	// is_color();
 	// if (access(sprite_value, R_OK) == -1)
 	// 	return (perror("file is inaccessible"), 1);
 	which_value(name, sprite_value); //assign proper values inside the function
@@ -183,9 +184,6 @@ int old_map_starts(char *str)
 	return (1);
 }
 
-
-#include <ctype.h>  // for isspace()
-
 int map_starts(char *str)
 {
     int i = 0;
@@ -210,32 +208,52 @@ int map_starts(char *str)
     return (1);  // The string is valid as a map start
 }
 
+int empty(char *str)
+{
+	int i;
+	int j;
 
+	i = 0;
+	j = 0;
+	while (str[i])
+	{
+		if (is_delimiter(str[i]))
+			j++;
+		i++;
+	}
+	if (j == i)
+		return (printf("the string '%s' is empty!\n", str), 1); // it's empty
+	return (0);
+}
 
 int file_content(char *map_path)
 {
 	int fd;
 	char *str;
+	t_sprite_list *node;
+	t_sprite_list *head;
 
+	head = NULL;
 	str = NULL;
 	fd = open(map_path, O_RDONLY);
 	while(1) // !map starts or all 6 sprites have been filled
 	{
 		str = get_next_line(fd);
-		if (!str)
+		if (!str) //end of file
 			break ;
 		str[ft_strlen(str) - 1] = '\0';
+		if (empty(str))
+			continue ;
 		if (map_starts(str))
-		{
-			free(str);
 			break ;
-		}
-		str_content(str);
+		node = str_content(str); //a;ready filled node.
+		add_node_to_list(node, head);
 		// check if some content in str
 		// parse the content
 		// function -> create a node and fill it with content of string
-		free(str);
 	}
+	if (str)
+		free(str);
 	close(fd);
 	printf("reached the map\n");
 	return (0);
