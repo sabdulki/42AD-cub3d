@@ -12,9 +12,10 @@
 				number > 0 && < 256
 				separated by comma
 				only 3 numbers after F or C
-		MAP (2.3)
-		2.3.1)
-		
-		
+	MAP PARSING
+	1) first and last line of a map.
+		1) skip all whitespaces, check if there are only '1' -> first line
+		2) 
+
 	
 */

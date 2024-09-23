@@ -6,7 +6,7 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 13:48:22 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/09/20 16:27:05 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/09/23 18:34:07 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,14 @@ int is_color(char *spr_value)
 
 	i = 0;
 	len = ft_strlen(spr_value);
-	printf("SPR: '%s'\n", spr_value);
+	// printf("SPR: '%s'\n", spr_value);
 	while (i < len)
 	{
 		if (!ft_isdigit(spr_value[i]) && spr_value[i] != ',')
-			return (1);
+			return (1); //not color
 		i++;
 	}
-	return (0);
+	return (0); //is color
 }
 
 int *check_num_color_value(char **str_nums)
@@ -97,106 +97,82 @@ char **check_str_color_value(char *spr_value)
 	return (str_nums);
 }
 
-int which_value(int name, char *spr_value)
+int *do_color(char *spr_value)
 {
 	char **str_nums;
 	int* num_arr;
-
+	
 	str_nums = NULL;
 	num_arr = NULL;
-	if (!is_color(spr_value)) //contains only digits and commas
-	{
-		printf("it's color!\n");
-		str_nums = check_str_color_value(spr_value);
-		if (!str_nums)
-			return (1);
-		num_arr = check_num_color_value(str_nums);
-		if (!num_arr)
-			return (1);
-		//assign field in node to int[3];
-		for (int i = 0; i < 3; i++)
-			printf("colors: %d\n", num_arr[i]);
-		return (0);
-	}
-	if ((name == NO && safe_strncmp("./path_to_the_north_texture", spr_value)) \
-	|| (name == SO && safe_strncmp("./path_to_the_south_texture", spr_value)) \
-	|| (name == WE && safe_strncmp("./path_to_the_west_texture", spr_value)) \
-	|| (name == EA && safe_strncmp("./path_to_the_east_texture", spr_value)))
-	{
-		// assign char *texture_path;
-		printf("found spr_value!!!: %s\n", spr_value);
-		return (0);
-	}
-	else
-		return (perror("The sprite value does not match the cardinal directions or rgb"), 1);
+	printf("it's color!\n");
+	str_nums = check_str_color_value(spr_value);
+	if (!str_nums)
+		return (NULL);
+	num_arr = check_num_color_value(str_nums);
+	if (!num_arr)
+		return (NULL);
+	//assign field in node to int[3];
+	for (int i = 0; i < 3; i++)
+		printf("colors: %d\n", num_arr[i]);
+	return (num_arr);
 }
 
-
-/* firstly check if the args are valid, after that assign these values to fields in a node */
-int str_content(char *str)
+t_sprite_list *fill_node(char *sprite_name, char *sprite_value)
 {
-	char *sprite_name;
-	char *sprite_value;
-	char **sprites;
+	t_sprite_list *node;
 	int name;
 
-	sprites = ft_split(str, ' ');
-	if (!sprites)
-		return (1);
-	if (!sprites[0] || !sprites[1])
-		return (perror("invalid arguments"), 1);
-	for (int i = 0; sprites[i]; i++)
-		printf("\tsprites %d: '%s'\n", i, sprites[i]);
-	sprite_name = sprites[0];
-	sprite_value = sprites[1];
+	node = init_def_node();
+	if (!node)
+		return (NULL);
 	name = which_name(sprite_name);
 	if (name == -1)
-		return (perror("invalid texture name"), 1);
+		return (perror("invalid texture name"), free(node), NULL);
 	printf("name: %d\n", name);
-	// is_color();
-	// if (access(sprite_value, R_OK) == -1)
-	// 	return (perror("file is inaccessible"), 1);
-	which_value(name, sprite_value); //assign proper values inside the function
-	//assign proper name
-
-	// node->sprite_name = result (enum);
-	return (0);
+	node->sprite_name = name;
+	if (is_color(sprite_value)) //the sprite is NOT color
+	{
+		// if (access(sprite_value, R_OK) == -1)
+		// 	return (perror("sprite path is inaccessible"), free(node), NULL);
+		node->texture_path = sprite_value;
+	}
+	else //the sprite is COLOR
+	{
+		node->color = do_color(sprite_value);
+		if (!node->color)
+			return (printf("do_color() failed\n"), free(node), NULL);
+	}
+	return (node);
 }
 
-int old_map_starts(char *str)
+/* firstly check if the args are valid, after that assign these values to fields in a node */
+t_sprite_list *str_content(char *str)
 {
-	size_t i;
-	// size_t j;
-	size_t len;
-	
-	len = ft_strlen(str);
-	i = 0;
-	// j = 0;
-	while (str[i] && i < len)
-	{
-		if (str[i] != '1' && str[i] != ' ' && str[i] != '\t')
-			return (0);
-		i++;
-	}
-	// printf("j: %ld, i: %ld, len: %ld\n", j, i, len);
-	// if (j == ft_strlen(str))
-	// 	return (1);
-	return (1);
+	t_sprite_list *node;
+	char **sprites;
+
+	sprites = ft_split(str, ' ');
+	if (!sprites || !sprites[0] || !sprites[1])
+		return (printf("invalid arguments\n"), NULL);
+	// for (int i = 0; sprites[i]; i++)
+	// 	printf("\tsprites %d: '%s'\n", i, sprites[i]);
+	node = fill_node(sprites[0], sprites[1]);
+	if (!node)
+		return (printf("failed to create node\n"), NULL);
+	return (node);
 }
 
 int map_starts(char *str)
 {
     int i = 0;
 
-    // Skip leading whitespace characters (spaces, tabs)
+	if (!str)
+		return (0);
     while (str[i] && is_delimiter(str[i]))
         i++;
-
     // The string must contain at least one '1'
     if (str[i] != '1')
         return (0);
-
-    // Now check the rest of the line
     while (str[i])
     {
         // The string must only contain '1', spaces, or tabs
@@ -215,6 +191,8 @@ int empty(char *str)
 
 	i = 0;
 	j = 0;
+	if (!str)
+		return (1);
 	while (str[i])
 	{
 		if (is_delimiter(str[i]))
@@ -222,11 +200,12 @@ int empty(char *str)
 		i++;
 	}
 	if (j == i)
-		return (printf("the string '%s' is empty!\n", str), 1); // it's empty
+		return (1); // it's empty
+		// return (printf("the string '%s' is empty!\n", str), 1); // it's empty
 	return (0);
 }
 
-int file_content(char *map_path)
+t_sprite_list *old_file_content(char *file_path)
 {
 	int fd;
 	char *str;
@@ -235,8 +214,8 @@ int file_content(char *map_path)
 
 	head = NULL;
 	str = NULL;
-	fd = open(map_path, O_RDONLY);
-	while(1) // !map starts or all 6 sprites have been filled
+	fd = open(file_path, O_RDONLY);
+	while (!map_starts(str)) // !map starts or all 6 sprites have been filled
 	{
 		str = get_next_line(fd);
 		if (!str) //end of file
@@ -244,17 +223,43 @@ int file_content(char *map_path)
 		str[ft_strlen(str) - 1] = '\0';
 		if (empty(str))
 			continue ;
-		if (map_starts(str))
-			break ;
-		node = str_content(str); //a;ready filled node.
-		add_node_to_list(node, head);
-		// check if some content in str
-		// parse the content
-		// function -> create a node and fill it with content of string
+		node = str_content(str); //already filled node.
+		if (node)
+			add_node_to_list(node, &head);
 	}
 	if (str)
 		free(str);
 	close(fd);
 	printf("reached the map\n");
-	return (0);
+	return (head); //parsed linked list of info till the map
+}
+
+t_file *overwrite_file(char *file_path)
+{
+	int fd;
+	char *str;
+	t_file *str_node;
+	t_file *head;
+
+	head = NULL;
+	str = NULL;
+	str_node = init_def_str(); 				//free
+	if (!str_node)
+		return (NULL);
+	fd = open(file_path, O_RDONLY);
+	while (1) // !map starts or all 6 sprites have been filled
+	{
+		str = get_next_line(fd);
+		if (!str) //end of file
+			break ;
+		str[ft_strlen(str) - 1] = '\0';
+		str_node = init_def_str(); 				//free
+		if (!str_node)
+			return (NULL);
+		str_node->str = str; 				//free
+		if (!empty(str))
+			add_node_to_file(str_node, &head);
+		// printf("'%s'\n", str_node->str);
+	}
+	return (head);
 }
