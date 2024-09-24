@@ -6,7 +6,7 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:26:55 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/09/23 18:03:10 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/09/24 20:35:50 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,16 @@
 # include <errno.h>
 # include <fcntl.h>
 
-typedef struct s_default
+typedef struct s_cub
 {
-	int type;
-}	t_default;
+	struct s_sprite_list *list;
+	char **map;
+} t_cub;
+
+// typedef struct s_default
+// {
+// 	int type;
+// }	t_default;
 
 typedef struct s_sprite_list
 {
@@ -45,8 +51,8 @@ typedef struct s_file
 	int type;
 	char *str;
 	struct s_file	*next;
+	struct s_file	*prev;
 }	t_file;
-
 
 typedef enum s_node
 {
@@ -68,26 +74,37 @@ typedef enum s_sprites
 }	t_sprites;
 
 /* parsing */
-int parsing(char *map_path);
+t_cub *parsing(char *map_path);
 int format(char *map_path);
 int check_file(char *map_path);
-// t_sprite_list *file_content(char *file_path);
-t_sprite_list *file_content(t_file *file);
+t_cub *file_content(t_file *file);
 t_file *overwrite_file(char *file_path);
 
+/* color */
+int is_color(char *spr_value);
+int *do_color(char *spr_value);
+
 /* list */
+t_cub *init_cub();
+t_file *init_def_str(void);
 t_sprite_list *init_def_node(void);
 void	add_node_to_list(t_sprite_list *node, t_sprite_list **head);
-t_file *init_def_str(void);
 void	add_node_to_file(t_file *node, t_file **head);
-
+void free_file_list(t_file *head);
+void free_sprite_list(t_sprite_list *head);
 
 /* utils */
+void p_error(char *str);
+int	is_delimiter(char c);
+int safe_strncmp(char *s1, char *s2);
 void print_file_strct(t_file *file);
+int which_name(char *sprite_name);
+int empty(char *str);
+int double_sprites(t_sprite_list *node, t_sprite_list *head);
+int all_sprites_found(t_sprite_list *head);
 
-/* utils with forbidden stuff */
+/* utils with forbidden stuff like switch and for()*/
 void print_sprite_list(t_sprite_list *head);
 char *sprite_to_string(t_sprites sprite);
-
 
 #endif

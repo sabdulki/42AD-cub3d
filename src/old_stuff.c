@@ -1,6 +1,29 @@
 
 #include "./cub.h"
 
+//improve -> there should be not just 1 line, but the whole map
+int map_starts(char *str)
+{
+    int i = 0;
+
+	if (!str)
+		return (0);
+    while (str[i] && is_delimiter(str[i]))
+        i++;
+    // The string must contain at least one '1'
+    if (str[i] != '1')
+        return (0);
+    while (str[i])
+    {
+        // The string must only contain '1', spaces, or tabs
+        if (str[i] != '1' && !is_delimiter(str[i]))
+            return (0);
+        i++;
+    }
+
+    return (1);  // The string is valid as a map start
+}
+
 t_sprite_list *old_file_content(char *file_path)
 {
 	int fd;

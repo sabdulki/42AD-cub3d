@@ -6,11 +6,23 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 13:59:22 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/09/23 18:03:35 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/09/24 20:31:25 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub.h"
+
+t_cub *init_cub()
+{
+	t_cub *cub;
+
+	cub = malloc(sizeof(t_cub));
+	if (!cub)
+		return (NULL);
+	cub->list = NULL;
+	cub->list = NULL;
+	return (cub);
+}
 
 t_file *init_def_str(void)
 {
@@ -22,9 +34,9 @@ t_file *init_def_str(void)
 	str_node->type = MY_FILE;
 	str_node->str = NULL;
 	str_node->next = NULL;
+	// printf("%p\n", str_node);
 	return (str_node);
 }
-
 
 t_sprite_list *init_def_node(void)
 {
@@ -43,7 +55,6 @@ t_sprite_list *init_def_node(void)
 	return (node);
 }
 
-
 void	add_node_to_file(t_file *node, t_file **head)
 {
 	t_file	*current;
@@ -53,6 +64,7 @@ void	add_node_to_file(t_file *node, t_file **head)
 	// i_list = modify_static_int(SET);
 	new_node = node;
 	new_node->next = NULL;
+	new_node->prev = NULL;
 	if (!*head)
 	{
 		*head = new_node;
@@ -65,39 +77,11 @@ void	add_node_to_file(t_file *node, t_file **head)
 			current = current->next;
 		// new_node->head = 0;
 		current->next = new_node;
+		new_node->prev = current;
 	}
 	// new_cmd->index = i_list;
 	return ;
 }
-
-
-// void	add_node_to_list(t_default *node, t_default **head)
-// {
-// 	t_sprite_list	*current;
-// 	t_sprite_list	*new_node;
-// 	// int			i_list;
-
-// 	// i_list = modify_static_int(SET);
-// 	new_node = node;
-// 	new_node->next = NULL;
-// 	if (!*head)
-// 	{
-// 		*head = new_node;
-// 		new_node->head = 1;
-// 	}
-// 	else
-// 	{
-// 		current = *head;
-// 		while (current->next != NULL)
-// 			current = current->next;
-// 		new_node->head = 0;
-// 		current->next = new_node;
-// 	}
-// 	// new_cmd->index = i_list;
-// 	return ;
-// }
-
-
 
 void	add_node_to_list(t_sprite_list *node, t_sprite_list **head)
 {
@@ -122,5 +106,46 @@ void	add_node_to_list(t_sprite_list *node, t_sprite_list **head)
 		current->next = new_node;
 	}
 	// new_cmd->index = i_list;
+	return ;
+}
+
+void free_sprite_list(t_sprite_list *head)
+{
+	t_sprite_list	*current;
+	t_sprite_list	*tmp;
+
+	if (!head)
+		return ;
+	current = head;
+	while (current)
+	{
+		tmp = current->next;
+		if (current->texture_path)
+			free(current->texture_path);
+		if (current->color)
+			free(current->color);
+		free(current);
+		// printf("%p\n", current);
+		current = tmp;
+	}
+	return ;
+}
+
+void free_file_list(t_file *head)
+{
+	t_file	*current;
+	t_file	*tmp;
+
+	if (!head)
+		return ;
+	current = head;
+	while (current)
+	{
+		tmp = current->next;
+		free(current->str);
+		free(current);
+		// printf("%p\n", current);
+		current = tmp;
+	}
 	return ;
 }

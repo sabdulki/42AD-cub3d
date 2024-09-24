@@ -6,21 +6,35 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 16:35:01 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/09/23 18:32:55 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/09/24 20:18:45 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub.h"
+
+void p_error(char *str)
+{
+	int i;
+
+	i = 0;
+	while(str[i])
+	{
+		write(2, &str[i], 1);
+		i++;
+	}
+	write(2, "\n", 1);
+}
 
 void print_sprite_list(t_sprite_list *head)
 {
 	t_sprite_list *tmp;
 
 	tmp = head;
+	printf("\n-----------START OF TEXTURES-----------\n");
 	while(tmp)
 	{
 		printf("----------------------\n");
-		printf("head?: %d\n", tmp->head);
+		// printf("head?: %d\n", tmp->head);
 		printf("name: %s\n", sprite_to_string(tmp->sprite_name));
 		printf("path: %s\n", tmp->texture_path);
 		printf("color: ");
@@ -52,15 +66,16 @@ char *sprite_to_string(t_sprites sprite)
 	}
 }
 
-
 void print_file_strct(t_file *file)
 {
 	t_file *tmp;
 
 	tmp = file;
+	printf("\n-----------START OF FILE-----------\n");
 	while(tmp)
 	{
-		printf("'%s'\n", tmp->str);
+		if (tmp->str)
+			printf("'%s'\n", tmp->str);
 		tmp = tmp->next;
 	}
 	printf("\n-----------END OF FILE-----------\n");

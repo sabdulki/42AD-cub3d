@@ -34,7 +34,8 @@
         "compare": "c",
         "functional": "c",
         "tuple": "c",
-        "type_traits": "c"
+        "type_traits": "c",
+        "__node_handle": "c"
     },
     "makefile.configureOnOpen": false
 }

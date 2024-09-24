@@ -6,7 +6,7 @@
 #    By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/17 17:27:03 by sabdulki          #+#    #+#              #
-#    Updated: 2024/09/23 17:21:27 by sabdulki         ###   ########.fr        #
+#    Updated: 2024/09/24 20:33:41 by sabdulki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,8 +20,11 @@ SRC_P = 	./src/parsing/parsing.c \
 			./src/parsing/check_file.c \
 			./src/parsing/list.c \
 			./src/parsing/map.c
+			
 
-SRC_U = 	./src/utils/utils_message.c
+SRC_U = 	./src/utils/utils_message.c \
+			./src/utils/utils.c \
+			./src/utils/utils_color.c 
 
 SRCS_S =	./main.c 
 
@@ -33,7 +36,7 @@ OBJS = $(SRCS:.c=.o)
 # OBJS := $(addprefix $(OBJS_DIR)/, $(notdir $(OBJS)))
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g3 --debug -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g3 --debug
 # -fsanitize=address
 
 LIBFT_CREATE = cd ./src/Libft && make  # Add this line to indicate the library path and name
