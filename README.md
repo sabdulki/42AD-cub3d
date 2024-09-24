@@ -15,9 +15,9 @@ typedef struct s_cub
 	char **map;
 } t_cub;
 ```
-Структура struct s_sprite_list *list уже возвращает готовый лист со спрайтами - именем и его значением. map пока что NULL.
+Структура struct s_sprite_list *list уже возвращает готовый лист со спрайтами - именем и его значением. char **map пока что NULL.
 
-Если тебе нужно распечатать этот лист, вызови функцию print_sprite_list(cub->list).
+Если тебе нужно распечатать этот лист со спрайтами, вызови функцию print_sprite_list(cub->list).
 Я ее уже вызываю в парсинге. При компиляции и запуске программы тебе как раз покажется контент этого листа. 
 
 # Some functions that could be useful for you
@@ -27,7 +27,7 @@ typedef struct s_cub
 void p_error(char *str);
 ```
 
-Вывкдет имя спрайта как строку, а не как число. Принимает enum. 
+Выведет имя спрайта как строку, а не как число. Принимает enum. 
 ```C
 char *sprite_to_string(t_sprites sprite);
 ```
@@ -42,5 +42,7 @@ int safe_strncmp(char *s1, char *s2);
 void free_cub(t_cub *cub);
 
 ```
+
+Я также создала отдельный branch 'parsing', буду пушить все изменения туда. Если добавлю что-то рабочее, я тебе напишу.
 
 Удачи!

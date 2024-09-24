@@ -6,7 +6,7 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:26:55 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/09/24 20:35:50 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/09/24 21:05:55 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ void	add_node_to_list(t_sprite_list *node, t_sprite_list **head);
 void	add_node_to_file(t_file *node, t_file **head);
 void free_file_list(t_file *head);
 void free_sprite_list(t_sprite_list *head);
+void free_cub(t_cub *cub);
 
 /* utils */
 void p_error(char *str);

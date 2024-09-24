@@ -6,7 +6,7 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 11:43:07 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/09/24 20:30:25 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/09/24 20:58:09 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ t_cub *parsing(char *file_path)
 		return (NULL);
 	// print_file_strct(file);
 	cub = file_content(file);
+	free_file_list(file);
 	if (!cub)
 		return (NULL);
 	print_sprite_list(cub->list);

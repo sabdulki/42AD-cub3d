@@ -6,7 +6,7 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 13:59:22 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/09/24 20:31:25 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/09/24 20:57:11 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,3 +149,12 @@ void free_file_list(t_file *head)
 	}
 	return ;
 }
+
+void free_cub(t_cub *cub)
+{
+	free_sprite_list(cub->list);
+	if (cub->map)
+		free(cub->map);
+	free(cub);
+}
+
