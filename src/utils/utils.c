@@ -6,7 +6,7 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 17:03:31 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/09/24 17:04:16 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/09/25 18:27:27 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,24 @@ int which_name(char *sprite_name)
 	else
 		return (-1);
 }
+
+int tabs(char *str)
+{
+	int i;
+
+	i = 0;
+	if (!str)
+		return (1);
+	while (str[i])
+	{
+		if (str[i] == '\t' || str[i] == '\n' || str[i] == '\v' \
+		|| str[i] == '\f' || str[i] == '\r')
+			return (printf("invalid delimiter\n"), 1);
+		i++;
+	}
+	return (0);
+}
+
 int empty(char *str)
 {
 	int i;

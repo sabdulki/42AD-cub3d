@@ -6,7 +6,7 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:27:00 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/09/24 20:34:10 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/09/25 21:29:42 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,7 @@ int main(int ac, char **av)
 	cub = parsing(file_path);
 	if (!cub)
 		return (printf("Error\n"), 1);
+	
+	// free_cub(cub);
 	return (0);
 }

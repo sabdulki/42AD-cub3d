@@ -3,32 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlomakin <vlomakin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 18:47:23 by vlomakin          #+#    #+#             */
-/*   Updated: 2023/07/27 13:01:17 by vlomakin         ###   ########.fr       */
+/*   Updated: 2024/09/25 21:25:41 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+char	*ft_substr(char const *arr, unsigned int start, size_t len)
 {
-	char	*str;
-	size_t	i;
+	char	*s_arr;
+	size_t	arr_len;
 
-	if (!s)
+	s_arr = "";
+	if (arr == NULL)
 		return (NULL);
-	i = 0;
-	if (ft_strlen(s) < start)
-		return (ft_strdup(""));
-	if (len > ft_strlen(s) - start)
-		len = ft_strlen(s) - start;
-	str = malloc(len + 1);
-	if (!str)
-		return (NULL);
-	while (i < len)
-		str[i++] = s[start++];
-	str[i] = '\0';
-	return (str);
+	arr_len = ft_strlen(arr);
+	if (start >= arr_len)
+		len = 0;
+	if (arr_len - start >= len)
+		s_arr = malloc(sizeof(char) * len + 1);
+	else if (len > arr_len - start)
+		s_arr = malloc(sizeof(char) * (arr_len - start));
+	if (s_arr == 0)
+		return (0);
+	if (len > 0)
+		ft_strlcpy(s_arr, &arr[start], len + 1);
+	else
+		*s_arr = '\0';
+	return (s_arr);
 }

@@ -35,7 +35,8 @@
         "functional": "c",
         "tuple": "c",
         "type_traits": "c",
-        "__node_handle": "c"
+        "__node_handle": "c",
+        "random": "c"
     },
     "makefile.configureOnOpen": false
 }

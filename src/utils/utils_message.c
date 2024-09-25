@@ -6,7 +6,7 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 16:35:01 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/09/24 20:18:45 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/09/25 18:35:26 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,27 @@
 
 void p_error(char *str)
 {
-	int i;
+    int i;
+    ssize_t result;
 
-	i = 0;
-	while(str[i])
-	{
-		write(2, &str[i], 1);
-		i++;
-	}
-	write(2, "\n", 1);
+    i = 0;
+    while (str[i])
+    {
+        result = write(2, &str[i], 1);
+        if (result == -1)
+        {
+            // Handle the error if needed
+            return;
+        }
+        i++;
+    }
+    result = write(2, "\n", 1);
+    if (result == -1)
+    {
+        // Handle the error if needed
+        return;
+    }
+	return ;
 }
 
 void print_sprite_list(t_sprite_list *head)

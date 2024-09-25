@@ -6,7 +6,7 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 13:59:22 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/09/24 20:31:25 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/09/25 20:25:54 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ t_file *init_def_str(void)
 		return (NULL);
 	str_node->type = MY_FILE;
 	str_node->str = NULL;
+	str_node->txtr_end = 0;
 	str_node->next = NULL;
 	// printf("%p\n", str_node);
 	return (str_node);
@@ -148,4 +149,15 @@ void free_file_list(t_file *head)
 		current = tmp;
 	}
 	return ;
+}
+
+void free_cub(t_cub *cub)
+{
+	if (!cub)
+		return ;
+	if (cub->list)
+		free_sprite_list(cub->list);
+	if (cub->map)
+		free_split(cub->map);
+	free(cub);
 }

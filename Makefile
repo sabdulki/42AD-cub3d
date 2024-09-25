@@ -6,7 +6,7 @@
 #    By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/17 17:27:03 by sabdulki          #+#    #+#              #
-#    Updated: 2024/09/24 20:33:41 by sabdulki         ###   ########.fr        #
+#    Updated: 2024/09/25 18:40:09 by sabdulki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,7 @@ OBJS = $(SRCS:.c=.o)
 # OBJS := $(addprefix $(OBJS_DIR)/, $(notdir $(OBJS)))
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g3 --debug
+CFLAGS = -Wall -Wextra -Werror -g3 --debug -fsanitize=address
 # -fsanitize=address
 
 LIBFT_CREATE = cd ./src/Libft && make  # Add this line to indicate the library path and name
@@ -53,6 +53,11 @@ else ifeq ($(OS), Darwin)
 	LDFLAGS += -L./mlx_mac -lmlx -framework OpenGL -framework AppKit -ldl -lpthread
 endif
 
+# Variables for colored output
+GREEN = \033[0;32m
+RED = \033[0;31m
+NC = \033[0m  # No Color
+
 # create the specified folder and move .o objects there
 # $(OBJS_DIR):
 # 	mkdir -p $(OBJS_DIR)
@@ -66,7 +71,12 @@ $(NAME): $(OBJS)
 # cd ./src/Libft && make
 # $(LIBFT_CREATE)
 	$(MAKE) -C src/Libft
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFT_A) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT_A) -o $(NAME)
+	@if [ $$? -eq 0 ]; then \
+		echo -e "$(GREEN)Build successful!$(NC)"; \
+	else \
+		echo -e "$(RED)Build failed!$(NC)"; \
+	fi
 
 all: $(NAME)
 
