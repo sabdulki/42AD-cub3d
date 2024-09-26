@@ -6,7 +6,7 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 13:59:22 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/09/25 20:25:54 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/09/26 17:10:00 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,20 @@ t_sprite_list *init_def_node(void)
 	node->next = NULL;
 
 	return (node);
+}
+
+t_map *init_def_map()
+{
+	t_map *map;
+	map = malloc(sizeof(t_map));
+	if (!map)
+		return (NULL);
+	map->map = NULL;
+	map->height = 0;
+	map->width = 0;
+	map->player_position = NULL;
+
+	return (map);
 }
 
 void	add_node_to_file(t_file *node, t_file **head)
@@ -158,6 +172,18 @@ void free_cub(t_cub *cub)
 	if (cub->list)
 		free_sprite_list(cub->list);
 	if (cub->map)
-		free_split(cub->map);
+		free_map(cub->map);
 	free(cub);
+}
+
+void free_map(t_map *map)
+{
+	if (!map)
+		return ;
+	if (map->map)
+		free_split(map->map);
+	if (map->player_position)
+		free(map->player_position);
+	free(map);
+	return ;
 }
