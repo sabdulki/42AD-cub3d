@@ -6,7 +6,7 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 13:47:27 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/09/24 20:29:14 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/09/25 18:29:39 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,7 @@ int all_sprites_found(t_sprite_list *head)
 int double_sprites(t_sprite_list *node, t_sprite_list *head)
 {
 	t_sprite_list *tmp;
-	int i;
 
-	i = 0;
 	tmp = head;
 	if (!head)
 		return (0);

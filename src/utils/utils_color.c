@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   uils_color.c                                       :+:      :+:    :+:   */
+/*   utils_color.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 16:27:03 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/09/24 20:17:23 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/09/25 19:52:01 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ char **check_str_color_value(char *spr_value)
 	while (str_nums[len])
 		len++;
 	if (len != 3)
-		return (p_error("invalid rgb value"), NULL);
+		return (p_error("invalid rgb value"), free_split(str_nums), NULL);
 	return (str_nums);
 }
 
@@ -79,6 +79,7 @@ int *do_color(char *spr_value)
 	if (!str_nums)
 		return (NULL);
 	num_arr = check_num_color_value(str_nums);
+	free_split(str_nums);
 	if (!num_arr)
 		return (NULL);
 	// for (int i = 0; i < 3; i++)

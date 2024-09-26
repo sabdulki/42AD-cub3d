@@ -6,7 +6,7 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 13:48:22 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/09/24 20:29:47 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/09/25 21:32:54 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ t_sprite_list *fill_sprite_node(char *sprite_name, char *sprite_value)
 		return (NULL);
 	name = which_name(sprite_name);
 	if (name == -1)
-		return (printf("invalid texture name: %s\n", sprite_name), free(node), NULL);
+		return (printf("invalid texture name: %s\n", sprite_name), free(sprite_name), free(node), NULL);
+	free(sprite_name);
 	node->sprite_name = name;
 	if (is_color(sprite_value)) //the sprite is NOT color
 	{
@@ -34,8 +35,9 @@ t_sprite_list *fill_sprite_node(char *sprite_name, char *sprite_value)
 	{
 		node->color = do_color(sprite_value);
 		if (!node->color)
-			return (printf("do_color() failed\n"), free(node), NULL);
+			return (printf("do_color() failed\n"), free(sprite_value), free(node), NULL);
 	}
+	free(sprite_value);
 	return (node);
 }
 
@@ -48,10 +50,11 @@ t_sprite_list *str_content(char *str)
 	// printf("the str is: '%s'\n", str);
 	sprites = ft_split(str, ' ');
 	if (!sprites || !sprites[0] || !sprites[1])
-		return (printf("invalid arguments\n"), NULL);
+		return (printf("invalid arguments\n"), free_split(sprites), NULL);
 	// for (int i = 0; sprites[i]; i++)
 	// 	printf("\tsprites %d: '%s'\n", i, sprites[i]);
 	node = fill_sprite_node(sprites[0], sprites[1]);
+	free(sprites);
 	if (!node)
 		return (printf("failed to create node\n"), NULL);
 	return (node);
@@ -76,6 +79,8 @@ t_sprite_list *fill_sprites(t_file *file)
 			return (free_sprite_list(head), NULL);
 		tmp = tmp->next;
 	}
+	// printf("'%s'\n", tmp->str);
+	tmp->txtr_end = 1;
 	return (head);
 }
 
@@ -91,12 +96,14 @@ t_cub *file_content(t_file *file)
 	t_cub *cub;
 
 	cub = init_cub();
+	if (!cub)
+		return (NULL);
 	cub->list = fill_sprites(file);
 	if (!cub->list)
-		return(free_file_list(file), NULL);
-	// cub->map = parse_map(file);
-	// if  (!cub->map)
-	// 	return(free_file_list(file), NULL);
+		return(free_cub(cub), NULL);
+	cub->map = parse_map(file);
+	if  (!cub->map)
+		return(free_cub(cub), NULL);
 	return (cub);
 }
 
@@ -107,6 +114,7 @@ t_file *overwrite_file(char *file_path)
 	t_file *str_node;
 	t_file *head;
 
+	str_node = NULL;
 	head = NULL;
 	str = NULL;
 	fd = open(file_path, O_RDONLY);
@@ -115,7 +123,9 @@ t_file *overwrite_file(char *file_path)
 		str = get_next_line(fd);
 		if (!str)                                //end of file
 			break ;
-		str[ft_strlen(str) - 1] = '\0';          //replace '\n' with '\0'
+		str[ft_strlen(str) - 1] = '\0';         //replace '\n' with '\0'
+		if (tabs(str))
+			return (free(str), free_file_list(head), NULL);
 		if (!empty(str))
 		{
 			str_node = init_def_str(); 				 //free
@@ -128,5 +138,8 @@ t_file *overwrite_file(char *file_path)
 			free(str);
 	}
 	close(fd);
+	// printf("last: '%s'\n", str_node->str);
+	if (!map_starts(str_node->str)) //practically useless. it's betetr to check the corners
+		return (printf("invalid file. map must be the last part of file"), free_file_list(head), NULL);
 	return (head);
 }

@@ -6,7 +6,7 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 13:59:22 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/09/24 20:57:11 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/09/26 17:28:46 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ t_file *init_def_str(void)
 		return (NULL);
 	str_node->type = MY_FILE;
 	str_node->str = NULL;
+	str_node->txtr_end = 0;
 	str_node->next = NULL;
 	// printf("%p\n", str_node);
 	return (str_node);
@@ -53,6 +54,20 @@ t_sprite_list *init_def_node(void)
 	node->next = NULL;
 
 	return (node);
+}
+
+t_map *init_def_map()
+{
+	t_map *map;
+	map = malloc(sizeof(t_map));
+	if (!map)
+		return (NULL);
+	map->map = NULL;
+	map->height = 0;
+	map->width = 0;
+	map->player_position = NULL;
+
+	return (map);
 }
 
 void	add_node_to_file(t_file *node, t_file **head)
@@ -152,9 +167,23 @@ void free_file_list(t_file *head)
 
 void free_cub(t_cub *cub)
 {
-	free_sprite_list(cub->list);
+	if (!cub)
+		return ;
+	if (cub->list)
+		free_sprite_list(cub->list);
 	if (cub->map)
-		free(cub->map);
+		free_map(cub->map);
 	free(cub);
 }
 
+void free_map(t_map *map)
+{
+	if (!map)
+		return ;
+	if (map->map)
+		free_split(map->map);
+	if (map->player_position)
+		free(map->player_position);
+	free(map);
+	return ;
+}
