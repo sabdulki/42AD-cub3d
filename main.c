@@ -6,7 +6,7 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:27:00 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/09/26 17:28:22 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/09/27 19:36:24 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int main(int ac, char **av)
 		return (printf("Error\n"), 1);
 
 
-	// free_cub(cub);
+	free_cub(cub);
+	printf(GREEN "successful!\n" NC);
 	return (0);
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   file_content.c                                     :+:      :+:    :+:   */
+/*   fill_sprites.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 13:48:22 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/09/25 21:32:54 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/09/27 19:48:29 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,10 @@ t_sprite_list *fill_sprite_node(char *sprite_name, char *sprite_value)
 	else //the sprite is COLOR
 	{
 		node->color = do_color(sprite_value);
+		free(sprite_value);
 		if (!node->color)
-			return (printf("do_color() failed\n"), free(sprite_value), free(node), NULL);
+			return (printf("do_color() failed\n"), free(node), NULL);
 	}
-	free(sprite_value);
 	return (node);
 }
 
@@ -70,76 +70,24 @@ t_sprite_list *fill_sprites(t_file *file)
 	tmp = file;
 	while (tmp && !all_sprites_found(head))
 	{
-		node = str_content(tmp->str); //already filled node.
-		if (!node)
-			return (free_sprite_list(head), NULL);
-		if (!double_sprites(node, head))
-			add_node_to_list(node, &head);
-		else
-			return (free_sprite_list(head), NULL);
+		if (!empty(tmp->str))
+		{
+			node = str_content(tmp->str); //already filled node.
+			if (!node)
+				return (free_sprite_list(head), NULL);
+			if (!double_sprites(node, head))
+				add_node_to_list(node, &head);
+			else
+				return (free_sprite_list(head), free_sprite_list(node), NULL);
+		}
 		tmp = tmp->next;
 	}
-	// printf("'%s'\n", tmp->str);
+	if (!tmp)
+		return (printf("no map!\n"), free_sprite_list(head), NULL);
 	tmp->txtr_end = 1;
 	return (head);
 }
 
-/* will return filled list with textures and char** map.
-everything will be alreday parsed */
-t_cub *file_content(t_file *file)
-{
-	// go through file linked list. 
-	// fill sprite linked list with alreday parsed data
-	// parse map
-	// fill char **map with alreday parsed data
 
-	t_cub *cub;
 
-	cub = init_cub();
-	if (!cub)
-		return (NULL);
-	cub->list = fill_sprites(file);
-	if (!cub->list)
-		return(free_cub(cub), NULL);
-	cub->map = parse_map(file);
-	if  (!cub->map)
-		return(free_cub(cub), NULL);
-	return (cub);
-}
 
-t_file *overwrite_file(char *file_path)
-{
-	int fd;
-	char *str;
-	t_file *str_node;
-	t_file *head;
-
-	str_node = NULL;
-	head = NULL;
-	str = NULL;
-	fd = open(file_path, O_RDONLY);
-	while (1)
-	{
-		str = get_next_line(fd);
-		if (!str)                                //end of file
-			break ;
-		str[ft_strlen(str) - 1] = '\0';         //replace '\n' with '\0'
-		if (tabs(str))
-			return (free(str), free_file_list(head), NULL);
-		if (!empty(str))
-		{
-			str_node = init_def_str(); 				 //free
-			if (!str_node)
-				return (free(str), free_file_list(head), NULL);
-			str_node->str = str;
-			add_node_to_file(str_node, &head);
-		}
-		else	
-			free(str);
-	}
-	close(fd);
-	// printf("last: '%s'\n", str_node->str);
-	if (!map_starts(str_node->str)) //practically useless. it's betetr to check the corners
-		return (printf("invalid file. map must be the last part of file"), free_file_list(head), NULL);
-	return (head);
-}

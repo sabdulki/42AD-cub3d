@@ -6,7 +6,7 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 13:59:22 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/09/26 17:28:46 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/09/27 18:01:03 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_cub *init_cub()
 	if (!cub)
 		return (NULL);
 	cub->list = NULL;
-	cub->list = NULL;
+	cub->map = NULL;
 	return (cub);
 }
 
@@ -34,6 +34,8 @@ t_file *init_def_str(void)
 	str_node->type = MY_FILE;
 	str_node->str = NULL;
 	str_node->txtr_end = 0;
+	str_node->map_start = 0;
+	str_node->map_end = 0;
 	str_node->next = NULL;
 	// printf("%p\n", str_node);
 	return (str_node);
@@ -65,8 +67,8 @@ t_map *init_def_map()
 	map->map = NULL;
 	map->height = 0;
 	map->width = 0;
-	map->player_position = NULL;
-
+	map->player_direction= 0;
+	map->player_position = NULL; //pos[0] = y, pos[1] = x
 	return (map);
 }
 
