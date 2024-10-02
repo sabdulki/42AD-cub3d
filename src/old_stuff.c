@@ -26,7 +26,7 @@ t_sprite_list *old_file_content(char *file_path)
 	head = NULL;
 	str = NULL;
 	fd = open(file_path, O_RDONLY);
-	while (!map_starts(str)) // !map starts or all 6 sprites have been filled
+	while (!map_top_bottom(str)) // !map starts or all 6 sprites have been filled
 	{
 		str = get_next_line(fd);
 		if (!str) //end of file
@@ -45,7 +45,7 @@ t_sprite_list *old_file_content(char *file_path)
 	return (head); //parsed linked list of info till the map
 }
 
-int old_map_starts(char *str)
+int old_map_top_bottom(char *str)
 {
 	size_t i;
 	// size_t j;

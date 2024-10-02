@@ -6,7 +6,7 @@
 #    By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/17 17:27:03 by sabdulki          #+#    #+#              #
-#    Updated: 2024/09/25 18:40:09 by sabdulki         ###   ########.fr        #
+#    Updated: 2024/09/27 19:47:02 by sabdulki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,15 +16,18 @@ SRC_GNL =	./src/get_next_line/get_next_line.c \
 			./src/get_next_line/get_next_line_utils.c
 
 SRC_P = 	./src/parsing/parsing.c \
-			./src/parsing/file_content.c \
+			./src/parsing/fill_sprites.c \
 			./src/parsing/check_file.c \
 			./src/parsing/list.c \
-			./src/parsing/map.c
+			./src/parsing/map.c \
+			./src/parsing/map_edges.c \
+			./src/parsing/nbrs_check.c
 			
 
 SRC_U = 	./src/utils/utils_message.c \
 			./src/utils/utils.c \
-			./src/utils/utils_color.c 
+			./src/utils/utils_color.c \
+			./src/utils/utils_map.c
 
 SRCS_S =	./main.c 
 
@@ -36,7 +39,7 @@ OBJS = $(SRCS:.c=.o)
 # OBJS := $(addprefix $(OBJS_DIR)/, $(notdir $(OBJS)))
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g3 --debug -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g3 --debug 
 # -fsanitize=address
 
 LIBFT_CREATE = cd ./src/Libft && make  # Add this line to indicate the library path and name

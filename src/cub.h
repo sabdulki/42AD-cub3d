@@ -6,7 +6,7 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:26:55 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/09/26 17:09:40 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/09/27 20:03:07 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,10 @@
 # include <limits.h>
 # include <errno.h>
 # include <fcntl.h>
+
+#define GREEN "\033[0;32m"
+#define RED "\033[0;31m"
+#define NC "\033[0m"
 
 typedef struct s_cub
 {
@@ -60,6 +64,8 @@ typedef struct s_file
 	int type;
 	char *str;
 	int txtr_end;
+	int map_start;
+	int map_end;
 	struct s_file	*next;
 	struct s_file	*prev;
 }	t_file;
@@ -89,10 +95,21 @@ int format(char *map_path);
 int check_file(char *map_path);
 t_cub *file_content(t_file *file);
 t_file *overwrite_file(char *file_path);
+t_sprite_list *fill_sprites(t_file *file);
 
 /* map parsing */
-t_map *parse_map(t_file *file);
-int map_starts(char *str);
+t_map *do_map(t_file *file);
+int map_top_bottom(t_file *file);
+int map_end(t_file *supposed_end);
+t_file *get_start(t_file *file);
+t_file *get_end(t_file *file);
+int invalid_char(int c);
+int nsew(int c);
+int get_nbr_value(t_map *map_strct, int y, int x);
+int check_neighbours(t_map *map, int y, int x);
+char **allocate_2d_map(int height, int width);
+
+
 
 /* color */
 int is_color(char *spr_value);
@@ -111,6 +128,7 @@ void free_cub(t_cub *cub);
 void free_map(t_map *map);
 void free_file_list(t_file *head);
 void free_sprite_list(t_sprite_list *head);
+void free_cub(t_cub *cub);
 
 /* utils */
 void p_error(char *str);
@@ -122,6 +140,12 @@ int empty(char *str);
 int tabs(char *str);
 int double_sprites(t_sprite_list *node, t_sprite_list *head);
 int all_sprites_found(t_sprite_list *head);
+int calculate_height(t_file *start);
+int calculate_width(t_file *start);
+char **allocate_2d_map(int height, int width);
+int print_map(t_map *map);
+int where_map(t_file *file);
+
 
 /* utils with forbidden stuff like switch and for()*/
 void print_sprite_list(t_sprite_list *head);
