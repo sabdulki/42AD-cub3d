@@ -6,7 +6,7 @@
 #    By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/17 17:27:03 by sabdulki          #+#    #+#              #
-#    Updated: 2024/09/27 19:47:02 by sabdulki         ###   ########.fr        #
+#    Updated: 2024/10/01 13:40:03 by sabdulki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,10 @@ SRC_P = 	./src/parsing/parsing.c \
 			./src/parsing/list.c \
 			./src/parsing/map.c \
 			./src/parsing/map_edges.c \
-			./src/parsing/nbrs_check.c
+			./src/parsing/nbrs_check.c \
+			./src/parsing/init_lists.c \
+			./src/parsing/free_lists.c
+			
 			
 
 SRC_U = 	./src/utils/utils_message.c \

@@ -12,28 +12,28 @@
 
 #include "../cub.h"
 
-int is_color(char *spr_value)
+int	is_color(char *spr_value)
 {
-	int i;
-	int len;
+	int	i;
+	int	len;
 
 	i = 0;
 	len = ft_strlen(spr_value);
 	while (i < len)
 	{
 		if (!ft_isdigit(spr_value[i]) && spr_value[i] != ',')
-			return (1); //not color
+			return (1); // not color
 		i++;
 	}
-	return (0); //is color
+	return (0); // is color
 }
 
-int *check_num_color_value(char **str_nums)
+int	*check_num_color_value(char **str_nums)
 {
-	int i;
-	int len;
-	int *int_num;
-	int tmp_num;
+	int	i;
+	int	len;
+	int	*int_num;
+	int	tmp_num;
 
 	int_num = malloc(sizeof(int) * 3);
 	if (!int_num)
@@ -51,10 +51,10 @@ int *check_num_color_value(char **str_nums)
 	return (int_num);
 }
 
-char **check_str_color_value(char *spr_value)
+char	**check_str_color_value(char *spr_value)
 {
-	char **str_nums;
-	int len;
+	char	**str_nums;
+	int		len;
 
 	str_nums = ft_split(spr_value, ',');
 	if (!str_nums)
@@ -67,11 +67,11 @@ char **check_str_color_value(char *spr_value)
 	return (str_nums);
 }
 
-int *do_color(char *spr_value)
+int	*do_color(char *spr_value)
 {
-	char **str_nums;
-	int* num_arr;
-	
+	char	**str_nums;
+	int		*num_arr;
+
 	str_nums = NULL;
 	num_arr = NULL;
 	// printf("it's color!\n");

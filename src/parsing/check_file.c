@@ -12,10 +12,10 @@
 
 #include "../cub.h"
 
-int format(char *map_path)
+int	format(char *map_path)
 {
-	int len;
-	char *format_str;
+	int		len;
+	char	*format_str;
 
 	len = ft_strlen(map_path);
 	format_str = ft_substr(map_path, len - 4, 4);
@@ -27,7 +27,7 @@ int format(char *map_path)
 		return (free(format_str), 0);
 }
 
-int check_file(char *map_path)
+int	check_file(char *map_path)
 {
 	if (format(map_path))
 		return (p_error("invalid format of file"), 1);
@@ -37,29 +37,29 @@ int check_file(char *map_path)
 	return (0);
 }
 
-int all_sprites_found(t_sprite_list *head)
+int	all_sprites_found(t_sprite_list *head)
 {
-	t_sprite_list *tmp;
-	int i;
+	t_sprite_list	*tmp;
+	int				i;
 
 	i = 0;
 	tmp = head;
 	if (!head)
 		return (0);
-	while(tmp)
+	while (tmp)
 	{
 		if (tmp->sprite_name != 0)
 			i++;
-		if (i == 6) //6 sprites in list
+		if (i == 6) // 6 sprites in list
 			return (1);
 		tmp = tmp->next;
 	}
 	return (0);
 }
 
-int double_sprites(t_sprite_list *node, t_sprite_list *head)
+int	double_sprites(t_sprite_list *node, t_sprite_list *head)
 {
-	t_sprite_list *tmp;
+	t_sprite_list	*tmp;
 
 	tmp = head;
 	if (!head)
