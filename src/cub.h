@@ -6,7 +6,7 @@
 /*   By: ruslannartdinov <ruslannartdinov@student.4 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:26:55 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/10/21 05:39:58 by ruslannartdinov  ###   ########.fr       */
+/*   Updated: 2024/10/21 07:44:09 by ruslannartdinov  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,6 @@ char *sprite_to_string(t_sprites sprite);
 
 
 int raycast(t_cub *cube);
-//void drawMap2D(void *mlx_ptr, void *win_ptr, int mapX, int mapY, char **map, int mapS);
+
 
 #endif
