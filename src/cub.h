@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ruslannartdinov <ruslannartdinov@student.4 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:26:55 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/09/27 20:03:07 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/10/21 05:39:58 by ruslannartdinov  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,5 +150,9 @@ int where_map(t_file *file);
 /* utils with forbidden stuff like switch and for()*/
 void print_sprite_list(t_sprite_list *head);
 char *sprite_to_string(t_sprites sprite);
+
+
+int raycast(t_cub *cube);
+//void drawMap2D(void *mlx_ptr, void *win_ptr, int mapX, int mapY, char **map, int mapS);
 
 #endif
