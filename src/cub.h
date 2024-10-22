@@ -6,7 +6,7 @@
 /*   By: ruslannartdinov <ruslannartdinov@student.4 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:26:55 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/10/21 07:44:09 by ruslannartdinov  ###   ########.fr       */
+/*   Updated: 2024/10/22 20:24:49 by ruslannartdinov  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,6 @@
 #define RED "\033[0;31m"
 #define NC "\033[0m"
 
-typedef struct s_cub
-{
-	struct s_sprite_list *list;
-	struct s_map *map;
-} t_cub;
-
-// typedef struct s_default
-// {
-// 	int type;
-// }	t_default;
-
 typedef struct s_map
 {
 	char **map;
@@ -48,16 +37,147 @@ typedef struct s_map
 	char player_direction;
 } t_map;
 
+typedef struct s_texture
+{
+	void	*img;
+	int		*data;
+	int		width;
+	int		height;
+	int		bpp;
+	int		size_line;
+	int		endian;
+}	t_texture;
+
 typedef struct s_sprite_list
 {
-	int type;
-	int sprite_name;
-	char *texture_path;
-	int *color; //size = 3;
-	int head;
+	int						type;
+	int						sprite_name;
+	char					*texture_path;
+	int						*color;
+	int						head;
 	struct s_sprite_list	*next;
-	
-}		t_sprite_list;
+}	t_sprite_list;
+
+typedef struct s_cub
+{
+	t_sprite_list	*list;
+	t_map			*map;
+}	t_cub;
+
+typedef struct s_data
+{
+	void		*mlx;
+	void		*win;
+	void		*img;
+	int			*addr;
+	int			bits_per_pixel;
+	int			line_length;
+	int			endian;
+	float		px;
+	float		py;
+	float		pdx;
+	float		pdy;
+	float		pa;
+	int			key_w;
+	int			key_a;
+	int			key_s;
+	int			key_d;
+	t_cub		*cube;
+	t_texture	textures[4];
+	int			map_width;
+	int			map_height;
+	float		plane_x;
+	float		plane_y;
+	int			floor_color;
+	int			ceiling_color;
+}	t_data;
+
+typedef enum e_sprites
+{
+	NO = 1,
+	SO = 2,
+	WE = 3,
+	EA = 4,
+	F  = 5,
+	C  = 6
+}	t_sprites;
+
+
+typedef struct s_point
+{
+	int	x;
+	int	y;
+}	t_point;
+
+typedef struct s_rect
+{
+	int	x;
+	int	y;
+	int	width;
+	int	height;
+}	t_rect;
+
+typedef struct s_line_vars
+{
+	int		dx;
+	int		dy;
+	int		sx;
+	int		sy;
+	int		err;
+	int		e2;
+}	t_line_vars;
+
+typedef struct s_cell_params
+{
+	int		x;
+	int		y;
+	int		scale;
+	t_point	offset;
+}	t_cell_params;
+typedef struct s_player_map_vars
+{
+	int	player_map_x;
+	int	player_map_y;
+	int	line_length;
+	int	line_x;
+	int	line_y;
+}	t_player_map_vars;
+
+typedef struct s_ray_vars
+{
+	float	camera_x;
+	float	ray_dir_x;
+	float	ray_dir_y;
+	int		map_x;
+	int		map_y;
+	float	side_dist_x;
+	float	side_dist_y;
+	float	delta_dist_x;
+	float	delta_dist_y;
+	float	perp_wall_dist;
+	int		step_x;
+	int		step_y;
+	int		side;
+}	t_ray_vars;
+
+typedef struct s_draw_vars
+{
+	int		line_height;
+	int		draw_start;
+	int		draw_end;
+	int		tex_num;
+	float	wall_x;
+	int		tex_x;
+}	t_draw_vars;
+
+typedef struct s_tex_vars
+{
+	int	y;
+	int	d;
+	int	tex_y;
+	int	color;
+	int	h;
+}	t_tex_vars;
 
 typedef struct s_file
 {
@@ -77,17 +197,6 @@ typedef enum s_node
 	MAP = 3, 
 	// 0 - default, none
 }	t_node;
-
-typedef enum s_sprites
-{
-	NO = 1,
-	SO = 2,
-	WE = 3, 
-	EA = 4,
-	F = 5,
-	C = 6
-	// 0 - default, none
-}	t_sprites;
 
 /* parsing */
 t_cub *parsing(char *map_path);
@@ -151,8 +260,75 @@ int where_map(t_file *file);
 void print_sprite_list(t_sprite_list *head);
 char *sprite_to_string(t_sprites sprite);
 
+# include <stdlib.h>
+# include <math.h>
+# include <stdio.h>
 
-int raycast(t_cub *cube);
+# define TEX_WIDTH 64
+# define TEX_HEIGHT 64
 
+# define KEY_W 13
+# define KEY_A 0
+# define KEY_S 1
+# define KEY_D 2
+# define KEY_ESC 53
+
+float	deg_to_rad(float a);
+float	fix_ang(float a);
+float	get_angle_from_direction(char dir);
+
+//static void	draw_single_cell(t_data *data, t_cell_params *params);
+void	my_mlx_pixel_put(t_data *data, t_point point, int color);
+void	draw_rectangle(t_data *data, t_rect rect, int color);
+void	draw_line(t_data *data, t_point p0, t_point p1, int color);
+int		no_collision(t_data *data, float x, float y);
+
+void	update_player(t_data *data);
+void	load_textures(t_data *data);
+void	draw_scene(t_data *data);
+
+int		key_press(int keycode, t_data *data);
+int		key_release(int keycode, t_data *data);
+int		update_frame(t_data *data);
+
+void	extract_floor_ceiling_colors(t_data *data);
+void	parse_map_ray(t_data *data);
+int		raycast(t_cub *cube);
+
+void	draw_rays_2d(t_data *data);
+void	cast_single_ray(t_data *data, int x, int w, int h);
+
+			float	deg_to_rad(float a);
+float	fix_ang(float a);
+float	get_angle_from_direction(char dir);
+int		no_collision(t_data *data, float x, float y);
+
+void	update_player(t_data *data);
+void	load_textures(t_data *data);
+void	draw_map_2d(t_data *data);
+void	draw_map_2d_ray(t_data *data, t_map *map);
+void	draw_player_on_map(t_data *data, t_point offset, int scale);
+void	draw_scene(t_data *data);
+
+int		key_press(int keycode, t_data *data);
+int		key_release(int keycode, t_data *data);
+int		update_frame(t_data *data);
+
+void	extract_floor_ceiling_colors(t_data *data);
+void	parse_map_ray(t_data *data);
+int		raycast(t_cub *cube);
+
+void	draw_rays_2d(t_data *data);
+void	cast_single_ray(t_data *data, int x, int w, int h);
+
+void	initialize_ray_vars(t_ray_vars *vars, int x, int w, t_data *data);
+void	calculate_step_sidedist(t_ray_vars *vars, t_data *data);
+void	perform_dda(t_ray_vars *vars, t_data *data);
+void	calculate_wall_vars(t_ray_vars *vars, t_data *data);
+void	draw_vertical_line(t_data *data, int x, int h, t_ray_vars *vars);
+int		select_texture(t_ray_vars *vars);
+float	get_wall_x(t_ray_vars *vars, t_data *data);
+void	calculate_line_vars(int h, t_ray_vars *vars, t_draw_vars *dv);
+void	draw_textured_line(t_data *data, int x, t_draw_vars *dv, int h);
 
 #endif

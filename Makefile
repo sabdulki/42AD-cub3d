@@ -19,7 +19,19 @@ SRC_U = 	./src/utils/utils_message.c \
 
 SRCS_S =	./main.c 
 
-SRC_RAYCAST = ./src/raycast/raycast.c
+SRC_RAYCAST = ./src/raycast/draw_scene.c \
+			  ./src/raycast/draw_scene_utils.c \
+ 			  ./src/raycast/draw_utils.c \
+			  ./src/raycast/drawmap.c \
+			  ./src/raycast/frame_update.c \
+			  ./src/raycast/map.c \
+			  ./src/raycast/raycast_norm.c \
+			  ./src/raycast/raycast_utils.c \
+			  ./src/raycast/raycasting.c \
+			  ./src/raycast/render.c \
+			  ./src/raycast/textures.c \
+			  ./src/raycast/update.c \
+			  ./src/raycast/utils.c \
 
 SRC = $(SRCS_S) $(SRC_GNL) $(SRC_P) $(SRC_U) $(SRC_RAYCAST)
 OBJ = $(SRC:.c=.o)
