@@ -32,6 +32,8 @@ SRC_RAYCAST = ./src/raycast/draw_scene.c \
 			  ./src/raycast/textures.c \
 			  ./src/raycast/update.c \
 			  ./src/raycast/utils.c \
+			  ./src/raycast/movement.c \
+			  ./src/raycast/clean_all.c \
 
 SRC = $(SRCS_S) $(SRC_GNL) $(SRC_P) $(SRC_U) $(SRC_RAYCAST)
 OBJ = $(SRC:.c=.o)

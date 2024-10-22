@@ -6,7 +6,7 @@
 /*   By: ruslannartdinov <ruslannartdinov@student.4 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:26:55 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/10/22 20:38:44 by ruslannartdinov  ###   ########.fr       */
+/*   Updated: 2024/10/22 21:47:10 by ruslannartdinov  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@
 # define KEY_S 1
 # define KEY_D 2
 # define KEY_ESC 53
+# define KEY_LEFT 123
+# define KEY_RIGHT 124
 
 typedef struct s_map
 {
@@ -88,9 +90,11 @@ typedef struct s_data
 	float		pdy;
 	float		pa;
 	int			key_w;
-	int			key_a;
-	int			key_s;
-	int			key_d;
+    int			key_a;
+    int			key_s;
+    int			key_d;
+    int			key_left;
+    int			key_right;
 	t_cub		*cube;
 	t_texture	textures[4];
 	int			map_width;
@@ -324,5 +328,8 @@ int				select_texture(t_ray_vars *vars);
 float			get_wall_x(t_ray_vars *vars, t_data *data);
 void			calculate_line_vars(int h, t_ray_vars *vars, t_draw_vars *dv);
 void			draw_textured_line(t_data *data, int x, t_draw_vars *dv, int h);
+void			update_rotation(t_data *data, float rot_speed);
+void			update_movement(t_data *data, float move_speed);
+void			clean_all(t_data *data);
 
 #endif
