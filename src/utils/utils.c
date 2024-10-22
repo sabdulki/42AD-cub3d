@@ -6,7 +6,7 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 17:03:31 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/09/25 18:27:27 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/10/22 18:13:27 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int which_name(char *sprite_name)
 	else if (safe_strncmp("C", sprite_name))
 		return (C);
 	else
-		return (-1);
+		return (free(sprite_name), -1);
 }
 
 int tabs(char *str)

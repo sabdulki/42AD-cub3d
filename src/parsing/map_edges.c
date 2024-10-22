@@ -6,7 +6,7 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 19:08:42 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/09/27 20:03:21 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/10/22 17:45:12 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,14 @@ int where_map(t_file *file)
 	if (!map_top_bottom(tmp)) //because this line MUST be map start
 		return (printf("invalid map!\n"), 1);
 	tmp->map_start = 1;
-	printf("map start: '%s'\n", tmp->str);
+	// printf("map start: '%s'\n", tmp->str);
 	while (tmp && !map_end(tmp))
 		tmp = tmp->next;
 	if (tmp && map_top_bottom(tmp))
 		tmp->map_end = 1;
 	else
 		return (printf("invalid map!\n"), 1);
-	printf("map end: '%s'\n", tmp->str);
+	// printf("map end: '%s'\n", tmp->str);
 	if (tmp && tmp->map_start && tmp->map_end)
 		return (printf("start and end are the same line\n"), 1);
 	tmp = tmp->next;

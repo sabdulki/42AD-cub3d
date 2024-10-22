@@ -28,18 +28,21 @@ CFLAGS = -Wall -Wextra -Werror
 CC = cc
 NAME = cub3d
 MAKE_MLX = cd mlx && make
-MAKE_LIBFT = cs ./src/Libft && make
+MAKE_LIBFT = cd ./src/Libft && make
 LIBFT_A = ./src/Libft/libft.a
 all : $(NAME)
 
 $(NAME) : $(OBJ)
-	$(MAKE_MLX) 
-	${CC} ${CFLAGS} ${OBJ} ${LIBFT_A} -Lmlx -lmlx -framework OpenGL -framework AppKit -o $(NAME)
+	$(MAKE_MLX)
+	$(MAKE_LIBFT)
+	$(CC) $(CFLAGS) $(OBJ) $(LIBFT_A) -Lmlx -lmlx -framework OpenGL -framework AppKit -o $(NAME)
 clean:
 	rm -f $(OBJ)
 	$(MAKE) clean -C mlx
+	$(MAKE) -C src/Libft clean
 fclean: clean
 	rm -f $(NAME)
+	$(MAKE) -C src/Libft fclean
 
 re:	fclean all
 

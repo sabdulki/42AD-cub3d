@@ -6,7 +6,7 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 17:16:09 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/09/27 19:53:54 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/10/22 17:45:33 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ char **fill_2d_map(t_file *map_start, t_map *map, char **map_2d)
         map_start = map_start->next;
         y++;
     }
-	printf("succesfully filled 2d map!\n");
+	// printf("succesfully filled 2d map!\n");
 	return map_2d;
 }
 

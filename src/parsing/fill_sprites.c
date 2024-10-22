@@ -6,7 +6,7 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 13:48:22 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/09/27 19:48:29 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/10/22 18:15:34 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,18 @@ t_sprite_list *fill_sprite_node(char *sprite_name, char *sprite_value)
 	t_sprite_list *node;
 	int name;
 
+	name = which_name(sprite_name);
+	if (name == -1)
+		return (printf("invalid texture name: %s\n", sprite_name), NULL);
+	free(sprite_name);
 	node = init_def_node();
 	if (!node)
 		return (NULL);
-	name = which_name(sprite_name);
-	if (name == -1)
-		return (printf("invalid texture name: %s\n", sprite_name), free(sprite_name), free(node), NULL);
-	free(sprite_name);
 	node->sprite_name = name;
 	if (is_color(sprite_value)) //the sprite is NOT color
 	{
-		// if (access(sprite_value, R_OK) == -1)
-		// 	return (p_error("sprite path is inaccessible"), free(node), NULL);
+		if (access(sprite_value, R_OK) == -1)
+			return (p_error("sprite path is inaccessible"), free(node), NULL);
 		node->texture_path = sprite_value;
 	}
 	else //the sprite is COLOR
@@ -41,7 +41,8 @@ t_sprite_list *fill_sprite_node(char *sprite_name, char *sprite_value)
 	return (node);
 }
 
-/* firstly check if the args are valid, after that assign these values to fields in a node */
+/* firstly check if the args are valid, 
+after that assign these values to fields in a node */
 t_sprite_list *str_content(char *str)
 {
 	t_sprite_list *node;
@@ -87,7 +88,3 @@ t_sprite_list *fill_sprites(t_file *file)
 	tmp->txtr_end = 1;
 	return (head);
 }
-
-
-
-
