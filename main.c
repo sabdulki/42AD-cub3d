@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ruslannartdinov <ruslannartdinov@student.4 +#+  +:+       +#+        */
+/*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:27:00 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/10/21 05:21:22 by ruslannartdinov  ###   ########.fr       */
+/*   Updated: 2024/10/22 18:42:41 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 
 int main(int ac, char **av)
 {
-	char *file_path;
-	t_cub *cub;
+	char	*file_path;
+	t_cub	*cub;
+
 	if (ac == 3) // means it's debug mode
 	{
 		printf("debug mode activated\n");
@@ -33,9 +34,8 @@ int main(int ac, char **av)
 	cub = parsing(file_path);
 	if (!cub)
 		return (printf("Error\n"), 1);
-
 	raycast(cub);
-	free_cub(cub);
 	printf(GREEN "successful!\n" NC);
+	free_cub(cub);
 	return (0);
 }

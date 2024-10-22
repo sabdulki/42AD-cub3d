@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ruslannartdinov <ruslannartdinov@student.4 +#+  +:+       +#+        */
+/*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:26:55 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/10/21 07:44:09 by ruslannartdinov  ###   ########.fr       */
+/*   Updated: 2024/10/22 18:39:13 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ t_map *do_map(t_file *file);
 int map_top_bottom(t_file *file);
 int map_end(t_file *supposed_end);
 t_file *get_start(t_file *file);
-t_file *get_end(t_file *file);
+t_file *define_map_end(t_file *tmp);
 int invalid_char(int c);
 int nsew(int c);
 int get_nbr_value(t_map *map_strct, int y, int x);

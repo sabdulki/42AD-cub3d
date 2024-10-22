@@ -6,11 +6,7 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 17:16:09 by sabdulki          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/10/22 17:45:33 by sabdulki         ###   ########.fr       */
-=======
-/*   Updated: 2024/10/01 13:37:08 by sabdulki         ###   ########.fr       */
->>>>>>> parsing
+/*   Updated: 2024/10/22 18:35:01 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +17,7 @@ int	fill_player_info(t_map *map, int y, int x)
 	if (!nsew(map->map[y][x]))
 		return (0);
 	if (map->player_direction != 0)
-		return (printf("cannot be more than 1 player. y: %d, x: %d\n", y, x),
-			1);
+		return (1);
 	map->player_direction = map->map[y][x];
 	map->player_position = malloc(sizeof(int) * 2);
 	if (!map->player_position)
@@ -30,8 +25,8 @@ int	fill_player_info(t_map *map, int y, int x)
 	map->player_position[0] = y;
 	map->player_position[1] = x;
 	printf("the player direction is: %c\n", map->player_direction);
-	printf("the player position is: y: %d, x: %d\n", map->player_position[0],
-		map->player_position[1]);
+	printf("the player position is: y: %d, x: %d\n", \
+	map->player_position[0], map->player_position[1]);
 	return (0);
 }
 
@@ -49,20 +44,17 @@ char	**fill_2d_map(t_file *map_start, t_map *map, char **map_2d)
 		while (x < map->width && map_start->str[x] != '\0')
 		{
 			if (invalid_char(map_start->str[x]))
-				return (printf("invalid char in map\n"), free_split(map_2d), NULL);
-            map_2d[y][x] = map_start->str[x];
-            x++;
-        }
-        while (x < map->width) 
-		{
-			map_2d[y][x] = ' ';
-            x++;
-        }
-        map_start = map_start->next;
-        y++;
-    }
-	// printf("succesfully filled 2d map!\n");
-	return map_2d;
+				return (printf("invalid char in map\n"), free_split(map_2d), \
+					NULL);
+			map_2d[y][x] = map_start->str[x];
+			x++;
+		}
+		while (x < map->width)
+			map_2d[y][x++] = ' ';
+		map_start = map_start->next;
+		y++;
+	}
+	return (map_2d);
 }
 
 t_map	*fill_map(t_file *file)
@@ -97,7 +89,6 @@ int	parse_map(t_map *map)
 			if (map->map[y][x] != '1' && map->map[y][x] != ' ' \
 				&& map->map[y][x] != '\0') // for now only 0 and NEWS
 			{
-				// printf("the char: %c. y: %d, x: %d\n", map->map[y][x], y, x);
 				if (check_neighbours(map, y, x)) // returned 1
 					return (printf("invalid map\n"), 1);
 				if (fill_player_info(map, y, x))

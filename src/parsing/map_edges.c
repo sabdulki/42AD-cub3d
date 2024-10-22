@@ -6,7 +6,7 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 19:08:42 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/10/22 18:21:55 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/10/22 18:39:55 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,9 @@ int	where_map(t_file *file)
 	if (!map_top_bottom(tmp)) // because this line MUST be map start
 		return (printf("invalid map!\n"), 1);
 	tmp->map_start = 1;
-	// printf("map start: '%s'\n", tmp->str);
-	while (tmp && !map_end(tmp))
-		tmp = tmp->next;
-	if (tmp && map_top_bottom(tmp))
-		tmp->map_end = 1;
-	else
-		return (printf("invalid map!\n"), 1);
-	// printf("map end: '%s'\n", tmp->str);
+	tmp = define_map_end(tmp);
+	if (!tmp)
+		return (1);
 	if (tmp && tmp->map_start && tmp->map_end)
 		return (printf("start and end are at the same line\n"), 1);
 	tmp = tmp->next;
@@ -42,6 +37,17 @@ int	where_map(t_file *file)
 		tmp = tmp->next;
 	}
 	return (0);
+}
+
+t_file	*define_map_end(t_file *tmp)
+{
+	while (tmp && !map_end(tmp))
+		tmp = tmp->next;
+	if (tmp && map_top_bottom(tmp))
+		tmp->map_end = 1;
+	else
+		return (printf("invalid map!\n"), NULL);
+	return (tmp);
 }
 
 int	map_top_bottom(t_file *node)
@@ -88,16 +94,6 @@ t_file	*get_start(t_file *file)
 
 	tmp = file;
 	while (tmp && !tmp->map_start)
-		tmp = tmp->next;
-	return (tmp);
-}
-
-t_file	*get_end(t_file *file)
-{
-	t_file	*tmp;
-
-	tmp = file;
-	while (tmp && !tmp->map_end)
 		tmp = tmp->next;
 	return (tmp);
 }

@@ -6,7 +6,7 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 13:48:22 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/10/22 18:23:15 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/10/22 18:25:36 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ t_sprite_list	*fill_sprite_node(char *s_name, char *sprite_value)
 	t_sprite_list	*node;
 	int				name;
 
-	name = which_name(sprite_name);
+	name = which_name(s_name);
 	if (name == -1)
-		return (printf("invalid texture name: %s\n", sprite_name), NULL);
-	free(sprite_name);
+		return (printf("invalid texture name: %s\n", s_name), NULL);
+	free(s_name);
 	node = init_def_node();
 	if (!node)
 		return (NULL);
@@ -41,15 +41,9 @@ t_sprite_list	*fill_sprite_node(char *s_name, char *sprite_value)
 	return (node);
 }
 
-<<<<<<< HEAD
 /* firstly check if the args are valid, 
 after that assign these values to fields in a node */
-t_sprite_list *str_content(char *str)
-=======
-/* firstly check if the args are valid,
-	after that assign these values to fields in a node */
 t_sprite_list	*str_content(char *str)
->>>>>>> parsing
 {
 	t_sprite_list	*node;
 	char			**sprites;
