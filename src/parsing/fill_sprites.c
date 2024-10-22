@@ -6,16 +6,16 @@
 /*   By: sabdulki <sabdulki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 13:48:22 by sabdulki          #+#    #+#             */
-/*   Updated: 2024/10/22 18:15:34 by sabdulki         ###   ########.fr       */
+/*   Updated: 2024/10/22 18:23:15 by sabdulki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub.h"
 
-t_sprite_list *fill_sprite_node(char *sprite_name, char *sprite_value)
+t_sprite_list	*fill_sprite_node(char *s_name, char *sprite_value)
 {
-	t_sprite_list *node;
-	int name;
+	t_sprite_list	*node;
+	int				name;
 
 	name = which_name(sprite_name);
 	if (name == -1)
@@ -25,13 +25,13 @@ t_sprite_list *fill_sprite_node(char *sprite_name, char *sprite_value)
 	if (!node)
 		return (NULL);
 	node->sprite_name = name;
-	if (is_color(sprite_value)) //the sprite is NOT color
+	if (is_color(sprite_value)) // the sprite is NOT color
 	{
 		if (access(sprite_value, R_OK) == -1)
 			return (p_error("sprite path is inaccessible"), free(node), NULL);
 		node->texture_path = sprite_value;
 	}
-	else //the sprite is COLOR
+	else // the sprite is COLOR
 	{
 		node->color = do_color(sprite_value);
 		free(sprite_value);
@@ -41,12 +41,18 @@ t_sprite_list *fill_sprite_node(char *sprite_name, char *sprite_value)
 	return (node);
 }
 
+<<<<<<< HEAD
 /* firstly check if the args are valid, 
 after that assign these values to fields in a node */
 t_sprite_list *str_content(char *str)
+=======
+/* firstly check if the args are valid,
+	after that assign these values to fields in a node */
+t_sprite_list	*str_content(char *str)
+>>>>>>> parsing
 {
-	t_sprite_list *node;
-	char **sprites;
+	t_sprite_list	*node;
+	char			**sprites;
 
 	// printf("the str is: '%s'\n", str);
 	sprites = ft_split(str, ' ');
@@ -61,11 +67,11 @@ t_sprite_list *str_content(char *str)
 	return (node);
 }
 
-t_sprite_list *fill_sprites(t_file *file)
+t_sprite_list	*fill_sprites(t_file *file)
 {
-	t_file *tmp;
-	t_sprite_list *node;
-	t_sprite_list *head;
+	t_file			*tmp;
+	t_sprite_list	*node;
+	t_sprite_list	*head;
 
 	head = NULL;
 	tmp = file;
@@ -73,7 +79,7 @@ t_sprite_list *fill_sprites(t_file *file)
 	{
 		if (!empty(tmp->str))
 		{
-			node = str_content(tmp->str); //already filled node.
+			node = str_content(tmp->str); // already filled node.
 			if (!node)
 				return (free_sprite_list(head), NULL);
 			if (!double_sprites(node, head))

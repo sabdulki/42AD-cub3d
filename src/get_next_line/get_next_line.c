@@ -28,7 +28,7 @@ t_nlist	*create_rem(t_nlist *node)
 	rem->next = NULL;
 	rem->content = NULL;
 	i_ln = slen(node->content, 1);
-	if (node->content[i_ln] == '\n') 
+	if (node->content[i_ln] == '\n')
 		i_ln++;
 	if (slen(node->content, 0) == i_ln)
 		return (free_linked_list(rem));
@@ -99,7 +99,7 @@ t_nlist	*make_a_node(int fd)
 	if (!node->content)
 		return (free_linked_list(node));
 	read_chars = read(fd, node->content, BUFFER_SIZE);
-	if (read_chars == -1 || read_chars == 0) 
+	if (read_chars == -1 || read_chars == 0)
 		return (free_linked_list(node));
 	node->content[read_chars] = '\0';
 	return (node);
